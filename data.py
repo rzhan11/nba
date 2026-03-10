@@ -25,7 +25,7 @@ def fetch_scores(seasons=SEASONS):
     return pd.DataFrame({
         'game_id':     merged['GAME_ID'],
         'season':      merged['season_home'],
-        'date':        pd.to_datetime(merged['GAME_DATE_home']),
+        'date':        merged['GAME_DATE_home'].astype(str),
         'home_team':   merged['TEAM_ABBREVIATION_home'],
         'away_team':   merged['TEAM_ABBREVIATION_away'],
         'home_points': merged['PTS_home'],
@@ -50,8 +50,8 @@ def fetch_player_games(seasons=SEASONS):
         all_games.append(df)
         time.sleep(1)
 
-    player_df = pd.concat(all_games, ignore_index=True)
-    return player_df.rename(columns={
+    df_player = pd.concat(all_games, ignore_index=True)
+    return df_player.rename(columns={
         'GAME_ID':            'game_id',
         'PLAYER_ID':          'player_id',
         'PLAYER_NAME':        'player_name',
